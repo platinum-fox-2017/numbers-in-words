@@ -43,5 +43,6 @@ console.log(numberToWords(102));
 console.log(numberToWords(142));
 console.log(numberToWords(705));
 console.log(numberToWords(727));
+console.log(numberToWords(999))
 console.log(numberToWords(1000000));
 console.log(numberToWords(2011845));
