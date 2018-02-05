@@ -14,7 +14,9 @@ function numberToWords(number) {
 
   var strBalikan = '';
 
-  while (number > 0) {
+  if (number <= 0) {
+    return strBalikan;
+  } else {
     var angkaWordsTerbesar = 0;
     var strPosisi = ''
     for (var i = 0; i < angkaWords.length; i++) {
@@ -36,6 +38,7 @@ function numberToWords(number) {
       }
       strBalikan = strBalikan + ' ' + strBilangan + ' ' + strPosisi;
       number = 0;
+      return strBalikan + numberToWords(number);
     } else {
       var bilangan = Math.floor(number / angkaWordsTerbesar);
       
@@ -62,14 +65,13 @@ function numberToWords(number) {
         number = number - angkaWordsTerbesar;
       }
       strBalikan = strBalikan + ' ' + strBilangan + ' ' + strPosisi;
+      return strBalikan + numberToWords(number);
     }
-    
   }
 
-  return strBalikan;
 }
 
 // Driver code
-console.log(numberToWords(9));
+console.log(numberToWords(413));
 // console.log(numberToWords(1000000));
 // console.log(numberToWords(2011845));
