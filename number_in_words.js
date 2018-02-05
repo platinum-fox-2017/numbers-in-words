@@ -30,27 +30,41 @@ const operator = [
 
 function numberToWords(number) {
   // Your code here
-  let result = '';
-  let numSplit = number.toString().split('');
-
   if(number === 0){
     return ''
   } else if (number < 20){
     return words[number][1];
   } else if (number < 100){
     let num = Math.floor(number/10);
-    return words[num][1] + ' puluh ' + numberToWords(number-num*10)
+    return numberToWords(num) + ' puluh ' + numberToWords(number%10)
   } else if (number < 1000){
     let num = Math.floor(number/100);
     if(num === 1){
-      return 'seratus ' + numberToWords(number-num*100)
+      return 'seratus ' + numberToWords(number%100)
     } else {
-      return words[num][1] + ' ratus ' + numberToWords(number-num*100)
+      return numberToWords(num) + ' ratus ' + numberToWords(number%100)
     }
+  } else if (number < 1000000){
+    let num = Math.floor(number/1000);
+    if(num === 1){
+      return 'seribu ' + numberToWords(number%1000)
+    } else {
+      return numberToWords(num) + ' ribu ' + numberToWords(number%1000)
+    }
+  } else if (number < 1000000000){
+    let num = Math.floor(number/1000000);
+    return numberToWords(num) + ' juta ' + numberToWords(number%1000000)
+  } else if (number < 1000000000000){
+    let num = Math.floor(number/1000000000);
+    return numberToWords(num) + ' miliar ' + numberToWords(number%1000000000)
+  } else if (number < 1000000000000000){
+    let num = Math.floor(number/1000000000000);
+    return numberToWords(num) + ' triliun ' + numberToWords(number%1000000000000)
   }
 }
 
 // Driver code
-console.log(numberToWords(876));
-// console.log(numberToWords(1000000));
-// console.log(numberToWords(2011845));
+console.log(numberToWords(1234567));
+console.log(numberToWords(1000000));
+console.log(numberToWords(2011845));
+console.log(numberToWords(999000000000000));
