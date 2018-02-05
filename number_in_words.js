@@ -11,19 +11,21 @@ function numberToWords(number) {
   }
 
   for(var i = 0; i<numberBack.length;i++){
-    var deviden = number/numberBack[i];
+    var deviden = Math.floor(number/numberBack[i]);
     if(number<10){
       return wordNumberFront[numberFront.indexOf(number)]+" ";
     }
     if (deviden >= 1) {
-      if(number>10 && number<20){
+      if(number==11)
+        return "sebelas ";
+      else if(number>11 && number<20){
         return  (wordNumberFront[numberFront.indexOf(Math.floor(number%10))] + " belas ");
       }
       else{
-        if(Math.floor(deviden) == 1)
-          return "se"+(wordNumberBack[i]+" ")+ numberToWords(number - Math.floor(deviden)* numberBack[i]);
+        if(deviden == 1)
+          return "se"+(wordNumberBack[i]+" ")+ numberToWords(number - deviden* numberBack[i]);
         else{
-          return numberToWords(Math.floor(deviden)) + (wordNumberBack[i]+" ") + numberToWords(number - Math.floor(deviden)* numberBack[i]);
+          return numberToWords(deviden) + (wordNumberBack[i]+" ") + numberToWords(number - deviden* numberBack[i]);
         }
       }
     }
@@ -32,11 +34,11 @@ function numberToWords(number) {
 }
 
 // Driver code
-console.log(numberToWords(30100731));
-console.log(numberToWords(999999999999));
-console.log(numberToWords(2));
+console.log(numberToWords(13100731));
+console.log(numberToWords(11999999999999));
+console.log(numberToWords(11));
 console.log(numberToWords(15));
 console.log(numberToWords(2));
 console.log(numberToWords(573));
-// console.log(numberToWords(1000000));
-// console.log(numberToWords(2011845));
+console.log(numberToWords(1000000));
+console.log(numberToWords(2011845));
