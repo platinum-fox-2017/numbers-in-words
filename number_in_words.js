@@ -24,6 +24,7 @@ function numberToWords(number) {
   var result = '';
 
 	while (number > 0) {
+
 		if (number < 20) {
 			for (var i = 0; i < listNumberandWord.length; i++) {
 				if (listNumberandWord[i].number == number) {
@@ -39,12 +40,11 @@ function numberToWords(number) {
 					break;
 				}
 			}
-		} else if (number == 100) {
-			result += ' seratus ';
+		} else if (number > 99 && number < 200) {
+			result += 'seratus ';
 			number %= 100;
-			break;
 		} else if (number < 1000) {
-			for (var i = 8; i >= 2; i--) {
+			for (var i = 8; i >= 1; i--) {
 				if (listNumberandWord[i].number == Math.floor(number/100)) {
 					result += listNumberandWord[i].word + ' ratus ';
 					number %= 100;
@@ -61,6 +61,9 @@ function numberToWords(number) {
 console.log(numberToWords(1));
 console.log(numberToWords(12));
 console.log(numberToWords(55));
+console.log(numberToWords(100));
+console.log(numberToWords(200));
+console.log(numberToWords(111));
 console.log(numberToWords(999));
 // console.log(numberToWords(1000000));
 // console.log(numberToWords(2011845));
