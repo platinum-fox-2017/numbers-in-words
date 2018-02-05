@@ -8,9 +8,7 @@ function numberToWords(number) {
   var bilangan = pecahan[digit];
   var result = '';
 
-  if(number === 0) {
-    result = 'nol';
-  } else if(number <= 11) {
+  if(number <= 11) {
     result += satuan[number];
   } else if(number < 20) {
     result += numberToWords(number-10) + ' belas';
@@ -30,4 +28,4 @@ console.log(numberToWords(705));
 console.log(numberToWords(1000000));
 console.log(numberToWords(11845));
 console.log(numberToWords(11));
-console.log(numberToWords(0));
+console.log(numberToWords(999000000000000))
