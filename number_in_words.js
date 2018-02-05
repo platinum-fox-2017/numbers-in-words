@@ -90,6 +90,7 @@ function numberToWords(number) {
           } else {
             // add number + puluh
             converted.push(numbersWords[startNumber-1] + digitsWords[1]);
+            converted.push(notasiAcc);
             output = converted.join(' ');
             leftover = Number(numberStr.substr(1));
             return output + ' ' + numberToWords(leftover);
