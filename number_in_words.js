@@ -9,9 +9,7 @@ function numberToWords(number) {
     return '';
   } else if(number<10){
     return kata[angkaSatuan.indexOf(number)];
-  } else if(number===11){
-    return 'sebelas';
-  } else if(number>12 && number<20){
+  } else if(number>=10 && number<20){
     return kata[angkaSatuan.indexOf(number)];
   } else {
     var str = number.toString();
@@ -28,18 +26,17 @@ function numberToWords(number) {
         var kataPertama = kata[j];
       }
     }
-    // console.log(hasilBagi);
-    // console.log(sisa);
-    // console.log(kataKedua);
-    // console.log(kataPertama);
-    var gabungan = kataPertama + ' ' + kataKedua + ' ';
-    // console.log(gabungan);
-    return gabungan + numberToWords(sisa);
+    if(hasilBagi>9){
+      return numberToWords(hasilBagi) + ' ' + kataKedua + ' ' + numberToWords(sisa);
+    } else {
+      var gabungan = kataPertama + ' ' + kataKedua + ' ';
+      return gabungan + numberToWords(sisa);
+    }
   }
 }
 
 
 console.log(numberToWords(14));
-console.log(numberToWords(705));
+console.log(numberToWords(345020));
 console.log(numberToWords(1000000));
 console.log(numberToWords(2011845));
