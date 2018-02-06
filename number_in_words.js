@@ -1,124 +1,75 @@
+function notasiCurrency(number){
+  var currWords = [
+                    ['', 1], ['ribu ', 4], ['juta ', 7],
+                    ['milyar ', 10], ['trillion ', 13]
+                  ];
+  let numberStr = String(Number(number));
+  let digitLength = numberStr.length;
+  if(digitLength === 0){
+    return currWords[0][0];
+  }
+  for (var i = currWords.length-1; i >= 0; i--) {
+    if(digitLength >= currWords[i][1]) {
+      var notasiAcc = currWords[i][0];
+      return notasiAcc;
+    }
+  }
+}
 
-  // 705
-  // tujuh, ratus
-  // 05
-  // lima
-  // if length is < 6
+function basicNumberToWord(number){
+  var pecahan = ['', 'puluh ', 'ratus '];
+  var angka = ['satu', 'dua ', 'tiga ', 'empat ', 'lima ', 'enam ', 'tujuh ', 'delapan ', 'sembilan ', 'sepuluh '];
+  let numberStr = String(Number(number));
+  let digitLength = numberStr.length;
+  if(digitLength > 1){
+    angka.splice(0, 1, 'se');
+  } else {
+    angka.splice(0, 1, 'satu ');
+  }
 
-function numberToWords(number) {
-
-  if(number === 0){
+  if (numberStr === '0'){
     return '';
   }
+  var numberReduc;
+  var angkaWord = angka[Number(numberStr[0]-1)]
 
-  var converted = [];
-  var numbersWords = ['satu', 'dua ', 'tiga ', 'empat ', 'lima ', 'enam ', 'tujuh ', 'delapan ', 'sembilan '];
-  var digitsWords = ['', 'puluh', 'ratus'];
-  var digitsWordsSecondary = ['', 'ribu', 'juta', 'milyar', 'trillion'];
-  var output = [];
-  var numberStr = String(number);
-
-  // numbers + digitsWords
-  var startNumber = Number(numberStr[0]);
-  var belasNumber = Number(numberStr[1]);
-  var digitLength = String(Number(numberStr)).length;
-
-  var notasiAcc;
-  if (digitLength >= 1 && digitLength < 4){
-    notasiAcc = digitsWordsSecondary[0]; // ''
-  } else {
-    if (digitLength >= 4 && digitLength < 7){
-      notasiAcc = digitsWordsSecondary[1]; // ribu
+  if(digitLength === 2 && numberStr[0] === '1'){ // belasan
+    if(numberStr[1] === '0'){ // 10
+      numberReduc = numberStr.split('').slice(2).join('');
+      return angka[0]+ pecahan[digitLength-1];
     } else {
-      if (digitLength >= 7 && digitLength < 10){
-        notasiAcc = digitsWordsSecondary[2]; // juta
-      } else {
-        if (digitLength >= 10 && digitLength < 13){
-          notasiAcc = digitsWordsSecondary[3]; // milyar
-       } else {
-          if (digitLength >= 13 && digitLength < 16){
-            notasiAcc = digitsWordsSecondary[4]; // ribu
-          }
-        }
-      }
+      pecahan.splice(1, 1, 'belas ');
+      numberReduc = numberStr.split('').slice(2).join('');
+      return angka[Number(numberStr[1]-1)] + pecahan[digitLength-1];
     }
-  }
-
-  // jika digitLength > 1, satu jadi 'se'
-  if(digitLength > 1){
-    numbersWords.splice(0, 1, 'se');
   } else {
-    numbersWords.splice(0, 1, 'satu');
+    numberReduc = numberStr.split('').slice(1).join('');
+    return angkaWord + pecahan[digitLength-1] + basicNumberToWord(numberReduc);
   }
+}
 
-  // jika posisi 2 dan start number is 1 then puluh menjadi 'belas'
-  if((digitLength+1) % 3 === 0 && startNumber === 1 && belasNumber != 0){
-    digitsWords.splice(1, 1, 'belas');
+function numberToWords(number){
+  var notasiAcc = notasiCurrency(number);
+  var threeDigit;
+  var newNumber;
+  var numLength = String(number).length;
+  if (numLength === 0) {
+    return '';
+  }
+  if (numLength % 3 === 0) {
+    threeDigit = String(number).substr(0, 3);
+    newNumber = String(number).substr(3);
   } else {
-    digitsWords.splice(1, 1, 'puluh');
+    var remain = numLength % 3;
+    threeDigit = String(number).substr(0, remain);
+    newNumber = String(number).substr(remain);
   }
-
-  if(digitLength % 3 === 0){
-    // add number + ratus
-    converted.push(numbersWords[startNumber-1] + digitsWords[2]);
-    output = converted.join(' ');
-    leftover = Number(numberStr.substr(1));
-    return output + ' ' + numberToWords(leftover);
-  } else {
-    if((digitLength+1) % 3 === 0){
-      // add belas exception
-      if (startNumber === 1 && belasNumber >= 2 ){ // number-belas execption return asap
-        converted.push(numbersWords[startNumber] + digitsWords[1]);
-        converted.push(notasiAcc);
-        output = converted.join(' ');
-        leftover = Number(numberStr.substr(2));
-        return output + ' ' + numberToWords(leftover);
-      } else {
-        if (startNumber === 1 && belasNumber === 1   ){ // number-belas execption return asap
-          converted.push(numbersWords[startNumber-1] + digitsWords[1]);
-          converted.push(notasiAcc);
-          output = converted.join(' ');
-          leftover = Number(numberStr.substr(2));
-          return output + ' ' + numberToWords(leftover);
-        } else {
-          if (startNumber === 1 && belasNumber === 0  ){ // number-belas execption return asap
-            converted.push(numbersWords[startNumber-1] + digitsWords[1]);
-            converted.push(notasiAcc);
-            output = converted.join(' ');
-            leftover = Number(numberStr.substr(2));
-            return output + ' ' + numberToWords(leftover);
-          } else {
-            // add number + puluh
-            converted.push(numbersWords[startNumber-1] + digitsWords[1]);
-            converted.push(notasiAcc);
-            output = converted.join(' ');
-            leftover = Number(numberStr.substr(1));
-            return output + ' ' + numberToWords(leftover);
-          }
-
-
-        }
-      }
-
-    } else {
-      // add number + ''
-      converted.push(numbersWords[startNumber-1] + digitsWords[0]);
-      converted.push(notasiAcc);
-      output = converted.join('');
-      leftover = Number(numberStr.substr(1));
-      return output + ' ' + numberToWords(leftover);
-    }
-  }
-
-  // converted.push(notasiAcc);
-  output = converted.join(' ');
-  leftover = Number(numberStr.substr(1));
-  return output + ' ' + numberToWords(leftover);
+  return basicNumberToWord(threeDigit) + notasiAcc  + numberToWords(newNumber);
 }
 
 // Driver code
 console.log(numberToWords(705));
-console.log(numberToWords(1000000));
+console.log(numberToWords(12004));
 console.log(numberToWords(2011845));
 console.log(numberToWords(150000000));
 console.log(numberToWords(10000));
