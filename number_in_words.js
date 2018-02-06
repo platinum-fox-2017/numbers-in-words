@@ -39,4 +39,4 @@ function numberToWords(number) {
 console.log(numberToWords(14));
 console.log(numberToWords(345020));
 console.log(numberToWords(1000000));
-console.log(numberToWords(2011845));
+console.log(numberToWords(2000000000011845));
