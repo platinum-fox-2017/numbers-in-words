@@ -15,11 +15,13 @@ function numberToWords(number) {
     }
   }
   else if(number>99 && number<1000){
-      if(number===100){
-        words='seratus';
+      var ratus=Math.floor(number/100);
+      if(ratus===1){
+        ratus='se';
+        words=ratus+'ratus '+numberToWords(number%100);
       }
       else {
-        words=satuan[Math.floor(number/100)]+' ratus '+numberToWords(number%100);
+        words=satuan[ratus]+' ratus '+numberToWords(number%100);
       }
 
   }
@@ -30,6 +32,6 @@ function numberToWords(number) {
 }
 
 // Driver code
-console.log(numberToWords(911));
+console.log(numberToWords(999));
 //console.log(numberToWords(1000000));
 //console.log(numberToWords(2011845));
