@@ -37,12 +37,18 @@ function numberToWords(number) {
   else if(len === 9){
     kata = numberToWords(Math.floor(number/1000000)) + ' juta ' + numberToWords(Number(num.slice(-6)))
   }
+  else if(9 < len <= 12){
+    kata = numberToWords(Math.floor(number/1000000000)) + ' milyar ' + numberToWords(Number(num.slice(-9)))
+  }
+  else if(12 < len <= 15){
+    kata = numberToWords(Math.floor(number/1000000000000)) + ' trilyun ' + numberToWords(Number(num.slice(-12)))
+  }
 
   return kata
 }
 
 // Driver code
-console.log(numberToWords(999999999));
+console.log(numberToWords(9999999999999));
 console.log(numberToWords(705));
 console.log(numberToWords(1000000));
 console.log(numberToWords(2011845));
